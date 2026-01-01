@@ -1,4 +1,5 @@
 import { useState, useTransition , useActionState} from "react";
+import { useFormStatus } from "react-dom";
 
 async function submitPost(prevState, formData){
     const title = formData.get("title");
@@ -20,6 +21,15 @@ const response = await fetch (
     }
 }
 
+ const ButtonFormBtn = () => {
+    const {pending} = useFormStatus();
+    return(
+      <button type="submit" className="mt-2" disabled={pending}>
+        {pending ? "Submitting..." : "Submit Post"}
+      </button>
+    )
+  }
+
 function PostForm() {
   // const [title, setTitle] = useState("");
   // const [body, setBody] = useState("");
@@ -29,6 +39,8 @@ function PostForm() {
 
   const [{success, error}, formAction, isPending] = useActionState(submitPost, {success: null, error: null});
 
+
+ 
  
 
   return (
@@ -46,9 +58,7 @@ function PostForm() {
         name="body"
         required
       />
-      <button type="submit" className="mt-2" disabled={isPending}>
-        {isPending ? "Submitting..." : "Submit Post"}
-      </button>
+    <ButtonFormBtn />
       {error && <p style={{ color: "red" }}>{error}</p>}
       {success && <p style={{ color: "green" }}>{success}</p>}
     </form>
