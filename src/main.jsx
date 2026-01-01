@@ -6,6 +6,6 @@ import PostForm from './PostForm.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <PostForm />
+   <App />
   </StrictMode>,
 )
